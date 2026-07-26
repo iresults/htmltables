@@ -16,6 +16,10 @@ This extension is designed to easily create HTML tables with the necessary synta
 
 ## Latest features
 
+### Version 2.0.0
+- [TASK] TYPO3 v14 compatibility
+- Drops support for v11
+
 ### Version 1.0.0
 - Please check the database for new fields when updating from v0.9
 - Updated images in Readme
