@@ -11,6 +11,7 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use Zarth\Htmltables\Service\InlineLabelService;
+use TYPO3\CMS\Core\Information\Typo3Version;
 
 #[AsEventListener(
     identifier: 'htmltables/preview-rendering-htmltables',
@@ -22,11 +23,16 @@ final readonly class PageContentPreviewRenderingEventListener
         if ($event->getTable() !== 'tt_content')
             return;
 
-        if ($event->getRecord()['CType'] === 'htmltables_htmltable') {
+        $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
+        if ($versionInformation->getMajorVersion() >= 14)
+            $record = $event->getRecord()->toArray();
+        else
+            $record = $event->getRecord();
 
+        if ($record['CType'] === 'htmltables_htmltable') {
             $inlineLabelService = GeneralUtility::makeInstance(InlineLabelService::class);
-            $rows = $inlineLabelService->getRows($event->getRecord()['uid']);
-            $headerPosition = $event->getRecord()['table_header_position'];
+            $rows = $inlineLabelService->getRows($record['uid']);
+            $headerPosition = $record['table_header_position'];
 
             $previewRows = '';
             if (!empty($rows)) {
@@ -37,7 +43,7 @@ final readonly class PageContentPreviewRenderingEventListener
                 }
             }
 
-            $caption = $event->getRecord()['table_caption']?'<caption>'.$event->getRecord()['table_caption'].'</caption>':'';
+            $caption = $record['table_caption']?'<caption>'.$record['table_caption'].'</caption>':'';
             $table =    '<table class="table table-sm table-responsive">' .
                             $caption .
                             $previewRows .

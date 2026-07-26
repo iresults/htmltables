@@ -25,7 +25,6 @@ class TableTagViewHelper extends AbstractTagBasedViewHelper
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->registerUniversalTagAttributes();
         $this->registerArgument('attributesInArray', 'array', 'Array of tag attributes');
         $this->registerArgument('role', 'string', 'Role attribute');
         $this->registerArgument('tagName', 'string', 'Name of tag');

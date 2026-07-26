@@ -1,1 +1,1 @@
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:htmltables/Configuration/TypoScript/HtmlTable.typoscript">
+@import 'EXT:htmltables/Configuration/TypoScript/HtmlTable.typoscript'

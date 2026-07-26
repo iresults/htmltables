@@ -1,4 +1,4 @@
-![Static Badge](https://img.shields.io/badge/11-%23FF8700?style=for-the-badge&logo=typo3&label=TYPO3&link=https%3A%2F%2Fget.typo3.org%2Fversion%2F11) ![Static Badge](https://img.shields.io/badge/12-%23FF8700?style=for-the-badge&logo=typo3&label=TYPO3&link=https%3A%2F%2Fget.typo3.org%2Fversion%2F12) ![Static Badge](https://img.shields.io/badge/13-%23FF8700?style=for-the-badge&logo=typo3&label=TYPO3&link=https%3A%2F%2Fget.typo3.org%2Fversion%2F13)
+![Static Badge](https://img.shields.io/badge/11-%23878787?style=for-the-badge&logo=typo3&label=TYPO3&link=https%3A%2F%2Fget.typo3.org%2Fversion%2F11) ![Static Badge](https://img.shields.io/badge/12-%23FF8700?style=for-the-badge&logo=typo3&label=TYPO3&link=https%3A%2F%2Fget.typo3.org%2Fversion%2F12) ![Static Badge](https://img.shields.io/badge/13-%23FF8700?style=for-the-badge&logo=typo3&label=TYPO3&link=https%3A%2F%2Fget.typo3.org%2Fversion%2F13) ![Static Badge](https://img.shields.io/badge/14-%23FF8700?style=for-the-badge&logo=typo3&label=TYPO3&link=https%3A%2F%2Fget.typo3.org%2Fversion%2F14)
 
 TYPO3 extension ``htmltables``
 ========================================

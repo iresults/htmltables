@@ -1,3 +1,6 @@
 .htmltables-preview-cell {
   width: 10em;
 }
+.rounded-0 {
+  border-radius: 0 !important;
+}
