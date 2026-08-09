@@ -34,17 +34,21 @@ class InlineLabelService
 {
     /**
      * Get the user function label for the file_reference table
+     *
+     * @param array $params
      */
-    public function getInlineLabel(array &$params)
+    public function getInlineLabel(array &$params): void
     {
         $row = $params['row'];
 
-        if (!empty($row))
+        if (!empty($row)) {
             $contentElement = $this->getContentElement($row);
+        }
 
         $autoCols = 0;
-        if (!empty($contentElement['cols']))
+        if (!empty($contentElement['cols'])) {
             $autoCols = $contentElement['cols'] - 1;
+        }
 
         // set row title
         $params['title'] = $this->setRowTitle($row);
@@ -75,17 +79,16 @@ class InlineLabelService
             default:
                 break;
         }
-        return;
     }
 
     /**
      * receive cell content as html-wrapped piece
      *
      * @param array $cells
-     *
+     * @param int $autoCols
      * @return string
      */
-    protected function getCellContents($cells, $autoCols)
+    protected function getCellContents(array $cells, int $autoCols): string
     {
         $contentArray = array_column($cells, 'bodytext');
         $recordsArray = array_column($cells, 'records');
@@ -93,24 +96,23 @@ class InlineLabelService
 
         // fill up empty cols with generic setting from "cols" field
         if ($lastKey < $autoCols) {
-            for ($i=$lastKey; $i < $autoCols; $i++)
+            for ($i = $lastKey; $i < $autoCols; $i++) {
                 $contentArray[] = '';
+            }
             $lastKey = $autoCols;
         }
 
         // strip tags
-        array_walk($contentArray, function(&$value, $key) use ($lastKey, $recordsArray)
-        {
+        array_walk($contentArray, function(&$value, $key) use ($lastKey, $recordsArray): void {
             $class = "htmltables-preview-cell text-truncate";
             if (!empty($value)) {
                 $value = strip_tags($value);
-            }
-            else {
-                if (empty($recordsArray[$key]))
+            } else {
+                if (empty($recordsArray[$key])) {
                     $value = ' ⸺ ';
-                else
+                } else {
                     $value = '< ' . $recordsArray[$key] .' >';
-
+                }
                 $class .= ' cell-empty';
             }
             $class .= ($key === $lastKey) ? ' border border-0' : ' border border-0 border-end';
@@ -118,7 +120,7 @@ class InlineLabelService
         });
 
         $cellContents = implode('', $contentArray);
-        $cellContentsRow  = $cellContents?' &nbsp; <span class="mb-0 float-end" style="line-height:1.75">' . $cellContents . '</span>':'';
+        $cellContentsRow = $cellContents ? ' &nbsp; <span class="mb-0 float-end" style="line-height:1.75">' . $cellContents . '</span>' : '';
 
         return $cellContentsRow;
     }
@@ -127,55 +129,61 @@ class InlineLabelService
      * get the number of cells in the row
      *
      * @param array $cells
-     *
-     * @return integer
+     * @return string
      */
-    protected function getAmountOfCells($cells)
+    protected function getAmountOfCells(array $cells): string
     {
-        $amountOfCells = is_array($cells)?count($cells):0;
+        $amountOfCells = is_array($cells) ? count($cells) : 0;
         $amountOfCellsRow = '<span class="ms-2 badge border float-end">' . $amountOfCells . '</span>';
         return $amountOfCellsRow;
     }
 
-    protected function getContentElement($row): array
+    /**
+     * @param array $row
+     * @return array
+     */
+    protected function getContentElement(array $row): array
     {
-        if (!empty($row['parenttable']) && !empty($row['parentid']))
-            return BackendUtility::getRecord($row['parenttable'], $row['parentid']);
-        else
-            return [];
+        if (!empty($row['parenttable']) && !empty($row['parentid'])) {
+            return BackendUtility::getRecord($row['parenttable'], $row['parentid']) ?: [];
+        }
+        return [];
     }
 
     /**
      * returns the row title
      *
      * @param array $row
-     *
      * @return string
      */
-    protected function setRowTitle($row)
+    protected function setRowTitle(array $row): string
     {
-        if (!empty($row))
+        if (!empty($row)) {
             $contentElement = $this->getContentElement($row);
+        }
 
-        $isFirstHeaderRow = !empty($contentElement['table_header_position']) && $contentElement['table_header_position'] === 1 ? true : false;
-        $isLastFooterRow = !empty($contentElement['table_tfoot']) && $contentElement['table_tfoot'] === 1 ? true : false;
+        $isFirstHeaderRow = !empty($contentElement['table_header_position']) && $contentElement['table_header_position'] === 1;
+        $isLastFooterRow = !empty($contentElement['table_tfoot']) && $contentElement['table_tfoot'] === 1;
 
         // set title with preceding nr. (1. row)
-        if (!empty($row['title']))
+        if (!empty($row['title'])) {
             $title = $row['title'];
-        else if (!empty($row['sorting']))
+        } elseif (!empty($row['sorting'])) {
             $title = $row['sorting'].'. row';
-        else
+        } else {
             $title = '<i>NEW row</i>';
+        }
 
         // set [Header] or [Footer]
         $rowIndex = $this->getRowIndices($row['parentid']);
         if (is_array($rowIndex)) {
-            if ($isFirstHeaderRow && $rowIndex['isFirst'] === $row['uid'])
+            if ($isFirstHeaderRow && $rowIndex['isFirst'] === $row['uid']) {
                 $title .= ' [Header]';
+            }
 
-            if ($isLastFooterRow && $rowIndex['isLast'] === $row['uid'] && $rowIndex['total'] > 2)
+            if ($isLastFooterRow && $rowIndex['isLast'] === $row['uid'] && $rowIndex['total'] > 2) {
                 $title .= ' [Footer]';
+            }
         }
 
         return $title;
@@ -184,11 +192,10 @@ class InlineLabelService
     /**
      * return row indices
      *
-     * @param integer $contentUid
-     *
-     * @return array  row indices
+     * @param int $contentUid
+     * @return array|false
      */
-    protected function getRowIndices($contentUid)
+    protected function getRowIndices(int $contentUid): array|false
     {
         $table = 'tx_htmltables_table_row';
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
@@ -203,31 +210,27 @@ class InlineLabelService
             ->fetchAllAssociative();
 
         if (!empty($result)) {
-            $index = [
-                'isFirst'   => current($result)['uid'],
-                'total'     => count($result),
-                'isLast'    => end($result)['uid']
+            return [
+                'isFirst' => current($result)['uid'],
+                'total' => count($result),
+                'isLast' => end($result)['uid']
             ];
-            return $index;
-        }
-        else {
-            return false;
         }
 
+        return false;
     }
 
     /**
      * return cell data
      *
-     * @param integer $rowUid
-     *
-     * @return array  cell data
+     * @param int $rowUid
+     * @return array
      */
-    public function getCellData($rowUid)
+    public function getCellData(int $rowUid): array
     {
         $table = 'tx_htmltables_table_cell';
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
-        $result = $queryBuilder
+        return $queryBuilder
             ->select('uid', 'headercell', 'bodytext', 'records', 'colspan', 'rowspan')
             ->from($table)
             ->where(
@@ -236,11 +239,13 @@ class InlineLabelService
             ->orderBy('sorting')
             ->executeQuery()
             ->fetchAllAssociative();
-
-        return $result;
     }
 
-    public function getRows($contentUid)
+    /**
+     * @param int $contentUid
+     * @return array|false
+     */
+    public function getRows(int $contentUid): array|false
     {
         $table = 'tx_htmltables_table_row';
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
@@ -254,11 +259,6 @@ class InlineLabelService
             ->executeQuery()
             ->fetchAllAssociative();
 
-        if (!empty($result)) {
-            return $result;
-        }
-        else {
-            return false;
-        }
+        return !empty($result) ? $result : false;
     }
 }
