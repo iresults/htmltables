@@ -16,6 +16,11 @@ This extension is designed to easily create HTML tables with the necessary synta
 
 ## Latest features
 
+### Version 2.0.1
+- [TASK] code cleanup and enhancements
+- [BUGFIX] add missing return types (thanks to cundd)
+- [TASK] dropped support for v11
+
 ### Version 2.0.0
 - [TASK] TYPO3 v14 compatibility
 - Drops support for v11
@@ -26,10 +31,6 @@ This extension is designed to easily create HTML tables with the necessary synta
 - !!! [FEATURE] expand the table into a fullscreen bootstrap modal. New Template structure!
 - [FEATURE] Set "class" for rows
 - Several enhancements and fixes
-
-### Version 0.9.13
-- [FEATURE] Add extension setting "useBootstrapTableClass". Uses "table" class initially – instead of "ce-table"
-– Several visual enhancements in the backend
 
 [...]
 
@@ -47,21 +48,33 @@ Don't forget to include the required typoscript into your template!
 
 ## Screenshots
 
-**Frontend**
+### Frontend
 
 ![Frontend view](https://raw.githubusercontent.com/zarthwork/htmltables/master/Documentation/Images/frontend-example-w3c.png)
 
-**Backend**
+### Backend
 
-![Backend preview](https://raw.githubusercontent.com/zarthwork/htmltables/master/Documentation/Images/backend-preview.png)
+**Backend - IRRE**
 
 ![Backend view](https://raw.githubusercontent.com/zarthwork/htmltables/master/Documentation/Images/backend-example_4.png)
 
+**Backend - Page preview**
+
+![Backend preview](https://raw.githubusercontent.com/zarthwork/htmltables/master/Documentation/Images/backend-preview.png)
+
+**Backend - Element wizard**
+
 ![Backend wizard](https://raw.githubusercontent.com/zarthwork/htmltables/master/Documentation/Images/backend-wizard.png)
+
+**Backend - Extension configuration**
 
 ![Backend extension conf](https://raw.githubusercontent.com/zarthwork/htmltables/master/Documentation/Images/system_extconf.png)
 
 ## Changelog
+
+### Version 0.9.13
+- [FEATURE] Add extension setting "useBootstrapTableClass". Uses "table" class initially – instead of "ce-table"
+– Several visual enhancements in the backend
 
 ### Version 0.9.12
 - [Bugfix] BE Preview: Order Cell Data by "sorting" (thanks to mamoun-al-smaiel)
