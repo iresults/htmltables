@@ -3,7 +3,6 @@ namespace Zarth\Htmltables\ViewHelpers;
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class TableTagViewHelper extends AbstractTagBasedViewHelper
 {
@@ -11,7 +10,7 @@ class TableTagViewHelper extends AbstractTagBasedViewHelper
 
     protected $validAttributes = ['title','rowspan','colspan','scope','abbr','class','headers','id'];
 
-    public function initialize()
+    public function initialize(): void
     {
         // we want to dynamically set the tag name by the
         // given argument, so we need to reset the default tag
@@ -22,7 +21,7 @@ class TableTagViewHelper extends AbstractTagBasedViewHelper
             $this->tag->setTagName($tagName);
         }
     }
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('attributesInArray', 'array', 'Array of tag attributes');
@@ -30,7 +29,7 @@ class TableTagViewHelper extends AbstractTagBasedViewHelper
         $this->registerArgument('tagName', 'string', 'Name of tag');
     }
 
-    public function render()
+    public function render(): string
     {
         // set content
         $this->tag->setContent($this->renderChildren());
