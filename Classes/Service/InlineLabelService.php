@@ -54,7 +54,7 @@ class InlineLabelService
         $params['title'] = $this->setRowTitle($row);
 
         // get cell amount & content
-        $cells = $this->getCellData($row['uid']);
+        $cells = is_int($row['uid']) ? $this->getCellData($row['uid']) : [];
         $amountOfCellsRow = $this->getAmountOfCells($cells);
         $cellContentsRow = $this->getCellContents($cells, $autoCols);
 
